@@ -3,15 +3,16 @@
 #include "vec3.h"
 
 template <typename T>
-class Color : Vec3<T> {
+class Color: public ElementWise<T, Color<T>, 3> {
  public:
-  using Vec3::Vec3;
+  Color() : ElementWise{0, 0, 0} {}
+  Color(T r, T g, T b) : ElementWise{r, g, b} {}
 
-  T r() const { return x(); }
-  T g() const { return y(); }
-  T b() const { return z(); }
+  T r() const { return d[0]; }
+  T g() const { return d[1]; }
+  T b() const { return d[2]; }
 
-  std::ostream& write(std::ostream& file) const {
+  std::ostream& write_ppm(std::ostream& file) const {
     int ir = static_cast<int>(255.999 * r());
     int ig = static_cast<int>(255.999 * g());
     int ib = static_cast<int>(255.999 * b());
