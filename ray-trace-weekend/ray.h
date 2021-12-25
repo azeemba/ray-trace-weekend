@@ -15,3 +15,5 @@ class Ray {
 
   Vec3<T> at(T t) { return _origin + _dir * t; }
 };
+
+using RayC = Ray<NumType>;

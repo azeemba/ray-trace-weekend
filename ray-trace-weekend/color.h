@@ -20,3 +20,5 @@ class Color: public ElementWise<T, Color<T>, 3> {
     return file << ir << " " << ig << " " << ib << "\n";
   }
 };
+using ColorC = Color<NumType>;
+
