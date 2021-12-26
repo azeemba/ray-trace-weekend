@@ -18,7 +18,7 @@ inline constexpr size_t to_index(size_t row, size_t col, Box box) {
 }
 
 inline constexpr Loc to_loc(size_t index, Box box) {
-  return {index / box.width, index % box.height};
+  return {index / box.width, index % box.width};
 }
 
 inline std::vector<ColorC> initialize_frame(Box box) {

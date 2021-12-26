@@ -1,8 +1,8 @@
 
 #include "renderer.h"
 #include "camera.h"
-#include "scene.h"
 #include "frame.h"
+#include "scene.h"
 
 #include <cassert>
 #include <fstream>

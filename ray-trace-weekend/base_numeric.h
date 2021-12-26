@@ -13,12 +13,11 @@ class ElementWise {
   T operator[](size_t i) const { return d[i]; }
   T& operator[](size_t i) { return d[i]; }
 
-  Self operator*(const Self& b) const {
-    return Self(d[0] * b[0], d[1] * b[1], d[2] * b[2]);
-  }
-
   Self operator*(const T scalar) const {
     return Self(scalar * d[0], scalar * d[1], scalar * d[2]);
+  }
+  Self operator/(const T scalar) const {
+    return Self(d[0] / scalar, d[1] / scalar, d[2] / scalar);
   }
 
   Self operator-() const { return *this * -1; }

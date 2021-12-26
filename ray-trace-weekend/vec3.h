@@ -20,7 +20,7 @@ class Vec3 : public ElementWise<T, Vec3<T>, 3> {
   T z() const { return d[2]; }
 
   T dot(const Vec3<T>& b) const {
-    return x() * b.x() + y() * b.y() + z() * b.z();
+    return (x() * b.x()) + (y() * b.y()) + (z() * b.z());
   }
 
   T l_squared() const { return dot(*this); }
@@ -32,7 +32,7 @@ class Vec3 : public ElementWise<T, Vec3<T>, 3> {
                 x() * b.y() - y() * b.x());
   }
 
-  Vec3<T> unit() const { return *this * (1 / length()); }
+  Vec3<T> unit() const { return *this / length(); }
 };
 
 using Vec3C = Vec3<NumType>;

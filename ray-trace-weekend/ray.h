@@ -13,7 +13,7 @@ class Ray {
   Vec3<T> origin() const { return _origin; }
   Vec3<T> dir() const { return _dir; }
 
-  Vec3<T> at(T t) { return _origin + _dir * t; }
+  Vec3<T> at(T t) const { return _origin + _dir * t; }
 };
 
 using RayC = Ray<NumType>;
