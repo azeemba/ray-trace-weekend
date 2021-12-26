@@ -1,11 +1,6 @@
 
 #include "camera.h"
 #include "ray.h"
-#include "scene.h"
-
-#include <algorithm>
-#include <execution>
-#include <numeric>
 
 Camera::Camera(const Vec3C& position,
                NumType view_width,
@@ -18,21 +13,8 @@ Camera::Camera(const Vec3C& position,
       _position + Vec3C(0, 0, -focal_length) - _right_dir * 0.5 + _up_dir * 0.5;
 }
 
-int Camera::scan_scene(const Scene& s,
-                       Box size,
-                       std::vector<ColorC>& frame) const {
-  std::vector<size_t> indices(size.height * size.width);
-  // could use iota views which saves the allocation but C++20, do we want it?
-  iota(indices.begin(), indices.end(), 0);
-
-  transform(std::execution::par_unseq, indices.begin(), indices.end(),
-            frame.begin(), [&size, this, &s](size_t index) {
-              Loc l = to_loc(index, size);
-              NumType x_factor = NumType(l.col) / size.width;
-              NumType y_factor = NumType(l.row) / size.height;
-              RayC r(_position, _top_left_point - _up_dir * y_factor +
-                                    _right_dir * x_factor);
-              return s.fire_ray(r);
-            });
-  return 0;
+RayC Camera::get_pixel_ray( NumType x_percent, NumType y_percent) const {
+  RayC r(_position, _top_left_point - _up_dir * y_percent +
+                      _right_dir * x_percent);
+  return r;
 }

@@ -34,7 +34,7 @@ int main() {
   size_t image_width = 400;
   size_t image_height = static_cast<size_t>(image_width / aspect_ratio);
   string filename = "test.ppm";
-  auto r = Renderer({image_height, image_width}, filename);
+  auto r = Renderer({image_height, image_width}, filename, 30);
   r.render(scene, camera);
 
   return 0;

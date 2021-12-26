@@ -1,12 +1,7 @@
 #pragma once
 
 #include "vec3.h"
-#include "color.h"
-#include "frame.h"
-
-#include <vector>
-
-class Scene;
+#include "ray.h"
 
 class Camera {
   Vec3C _position;
@@ -20,5 +15,5 @@ class Camera {
          NumType view_height,
          NumType focal_length);
 
-  int scan_scene(const Scene& s, Box size, std::vector<ColorC>& frame) const;
+  RayC get_pixel_ray(NumType x_percent, NumType y_percent) const;
 };
