@@ -1,3 +1,3 @@
 
-
-find -name "*.ppm" | xargs -i{} echo magick convert {} {}.jpg
+cd results
+find -name "*.ppm" | xargs -i{} magick convert {} {}.jpg

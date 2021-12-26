@@ -40,8 +40,14 @@ NumType Sphere::collide_ray(const RayC& ray) const {
   }
 }
 
-ColorC Sphere::get_color(const Vec3C& pos) const {
-  return _color;
+Vec3C Sphere::get_normal(const Vec3C& at) const {
+  return (at - _position).unit();
+}
+
+ColorC Sphere::get_color(const Vec3C& at) const {
+  auto n = (get_normal(at)+ Vec3C(1, 1, 1))*0.5;
+  return ColorC(n.x(), n.y(), n.z());
+  //return _color;
 }
 
 BackgroundWall::BackgroundWall(const Vec3C& pos, const ColorC& col)
@@ -51,6 +57,10 @@ NumType BackgroundWall::collide_ray(const RayC& ray) const {
   // ray.origin + t ray.dir = (x, y, _pos.z)
   auto t = (_position.z() - ray.origin().z()) / (ray.dir().z());
   return t;
+}
+Vec3C BackgroundWall::get_normal(const Vec3C& at) const {
+  // The wal is flat vertical
+  return Vec3C(0, 0, 1);
 }
 
 ColorC BackgroundWall::get_color(const Vec3C& pos) const {
