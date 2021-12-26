@@ -1,9 +1,10 @@
 
 #include "camera.h"
-#include "scene.h"
 #include "ray.h"
+#include "scene.h"
 
 #include <algorithm>
+#include <execution>
 #include <numeric>
 
 Camera::Camera(const Vec3C& position,
@@ -23,8 +24,8 @@ int Camera::scan_scene(const Scene& s,
   std::vector<size_t> indices(size.height * size.width);
   iota(indices.begin(), indices.end(), 0);
 
-  transform(indices.begin(), indices.end(), frame.begin(),
-            [&size, this, &s](size_t index) {
+  transform(std::execution::par_unseq, indices.begin(), indices.end(),
+            frame.begin(), [&size, this, &s](size_t index) {
               Loc l = to_loc(index, size);
               NumType x_factor = NumType(l.col) / size.width;
               NumType y_factor = NumType(l.row) / size.height;

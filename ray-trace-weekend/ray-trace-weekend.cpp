@@ -23,6 +23,13 @@ int main() {
       make_unique<BackgroundWall>(Vec3C(0, 0, -2), ColorC(0.5, 0.7, 1)));
   scene.take_object(
       make_unique<Sphere>(Vec3C(0, 0, -1), 0.25, ColorC(1, 0, 0)));
+  scene.take_object(
+      make_unique<Sphere>(Vec3C(0, 1, -1.2), 0.1, ColorC(1, 1, 0)));
+  scene.take_object(
+      make_unique<Sphere>(Vec3C(1.7, -1, -1.5), 0.3, ColorC(0, 1, 0.8)));
+  scene.take_object(
+      make_unique<Sphere>(Vec3C(-1, -1, -1.8), 0.2, ColorC(0.3, 0.8, 0.8)));
+
 
   size_t image_width = 400;
   size_t image_height = static_cast<size_t>(image_width / aspect_ratio);
