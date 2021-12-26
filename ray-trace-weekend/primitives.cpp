@@ -65,7 +65,7 @@ Vec3C BackgroundWall::get_normal(const Vec3C& at) const {
 
 ColorC BackgroundWall::get_color(const Vec3C& pos) const {
   ColorC gradient_start(1, 1, 1);
-  NumType unit_y = -(pos - _position).y();
+  NumType unit_y = (pos - _position).y();
   NumType t = 0.25 * (unit_y + 2.0);
   if (t > 1) {
     return ColorC();

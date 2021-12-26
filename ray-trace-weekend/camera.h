@@ -12,7 +12,7 @@ class Camera {
   Vec3C _position;
   Vec3C _right_dir;
   Vec3C _up_dir;
-  Vec3C _lower_left_point;
+  Vec3C _top_left_point;
 
  public:
   Camera(const Vec3C& position,
