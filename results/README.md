@@ -20,3 +20,5 @@ Previews
 
 ![09-diffuse-fix.ppm.jpg](09-diffuse-fix.ppm.jpg)
 
+![10-metal-material.ppm.jpg](10-metal-material.ppm.jpg)
+

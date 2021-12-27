@@ -36,8 +36,9 @@ ColorC MetalMaterial::get_color(const RayCollision& collision,
   auto& n = collision.normal_unit;
   auto reflected_ray = n*in_ray.dot(n)*2 - in_ray;
 
-  //return scene.fire_ray()
-  return ColorC();
+  return scene.fire_ray(RayC(collision.location, -reflected_ray),
+                        collision.depth) *
+         _color;
 }
 
 GradientMaterial::GradientMaterial(const ColorC& start, const ColorC& end)
