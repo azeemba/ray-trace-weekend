@@ -25,7 +25,7 @@ ColorC Scene::fire_ray(const RayC& ray, size_t depth) const {
   if (_objects.empty())
     return ColorC();
   if (depth > _max_depth) {
-    return ColorC();
+    return ColorC(1,1,1);
   }
 
   Primitive* smallest = _objects.begin()->get();
@@ -39,5 +39,5 @@ ColorC Scene::fire_ray(const RayC& ray, size_t depth) const {
   }
   auto location = ray.at(smallest_t);
   RayCollision collision{ray, location, smallest->get_normal(location), depth+1};
-  return smallest->get_material(ray.at(smallest_t))->get_color(collision, *smallest, *this);
+  return smallest->get_material(location)->get_color(collision, *smallest, *this);
 }

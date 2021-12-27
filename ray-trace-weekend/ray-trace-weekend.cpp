@@ -44,7 +44,7 @@ int main() {
   string filename = "test.ppm";
   auto r = Renderer({image_height, image_width}, filename, 30);
 
-  r.render(scene, camera);
+  r.render(scene, camera, true);
   const auto startTime = std::chrono::high_resolution_clock::now();
   r.render(scene, camera, false);
   const auto endTime = std::chrono::high_resolution_clock::now();

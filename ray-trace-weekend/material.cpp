@@ -19,6 +19,9 @@ ColorC DiffuseMaterial::get_color(const RayCollision& collision,
   auto random_unit = Vec3C(get_uniform_random(-1, 1), get_uniform_random(-1, 1),
                            get_uniform_random(-1, 1))
                          .unit();
+  if (random_unit.dot(collision.normal_unit) < 0) {
+    random_unit = -random_unit;
+  }
   return scene.fire_ray(
              RayC(out_sphere_center, collision.normal_unit + random_unit),
              collision.depth) *
@@ -31,7 +34,7 @@ GradientMaterial::GradientMaterial(const ColorC& start, const ColorC& end)
 ColorC GradientMaterial::get_color(const RayCollision& collision,
                                    const Primitive& primitive,
                                    const Scene& scene) const {
-  NumType unit_y = collision.normal_unit.y();
+  NumType unit_y = -collision.location.y();
   NumType t = 0.25 * (unit_y + 2.0);  // should store scaling factors
   t = std::clamp<NumType>(t, 0, 1);
   return _gradient_start * (1.0 - t) + _gradient_end * t;
