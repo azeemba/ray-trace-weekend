@@ -12,10 +12,10 @@ cat readme-header.md > ../README.md
 
 for f in *.jpg
 do
-  echo "![$f]($f)" >> README.md
+  echo "![$f](results/$f)" >> README.md
   echo "" >> README.md
 
-  echo "![$f]($f)" >> ../README.md
+  echo "![$f](results/$f)" >> ../README.md
   echo "" >> ../README.md
 done
 
