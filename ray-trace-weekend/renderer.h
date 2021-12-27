@@ -15,7 +15,7 @@ class Renderer {
 
  public:
   Renderer(Box size, std::string filename, size_t samples=1);
-  void render(const Scene& s, const Camera& c);
+  void render(const Scene& s, const Camera& c, bool save=true);
 
  private:
   void write_ppm(const std::vector<ColorC>& pixels);

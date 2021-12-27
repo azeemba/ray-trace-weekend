@@ -4,8 +4,16 @@
 #include <algorithm>
 #include <cmath>
 
-Sphere::Sphere(const Vec3C& pos, NumType r, ColorC c)
-    : _position(pos), _radius(r), _color(c) {}
+std::shared_ptr<const Material> Primitive::get_material(const Vec3C& at) {
+  return _material;
+}
+
+Sphere::Sphere(const Vec3C& pos,
+               NumType r,
+               std::shared_ptr<const Material> material)
+    : _position(pos), _radius(r) {
+  _material = material;
+}
 
 NumType Sphere::collide_ray(const RayC& ray) const {
   // Ray has origin + direction
@@ -44,14 +52,11 @@ Vec3C Sphere::get_normal(const Vec3C& at) const {
   return (at - _position).unit();
 }
 
-ColorC Sphere::get_color(const Vec3C& at) const {
-  auto n = (get_normal(at)+ Vec3C(1, 1, 1))*0.5;
-  return ColorC(n.x(), n.y(), n.z());
-  //return _color;
+BackgroundWall::BackgroundWall(const Vec3C& pos,
+                               std::shared_ptr<const Material> material)
+    : _position(pos) {
+  _material = material;
 }
-
-BackgroundWall::BackgroundWall(const Vec3C& pos, const ColorC& col)
-    : _position(pos), _color(col) {}
 
 NumType BackgroundWall::collide_ray(const RayC& ray) const {
   // ray.origin + t ray.dir = (x, y, _pos.z)
@@ -61,14 +66,4 @@ NumType BackgroundWall::collide_ray(const RayC& ray) const {
 Vec3C BackgroundWall::get_normal(const Vec3C& at) const {
   // The wal is flat vertical
   return Vec3C(0, 0, 1);
-}
-
-ColorC BackgroundWall::get_color(const Vec3C& pos) const {
-  ColorC gradient_start(1, 1, 1);
-  NumType unit_y = (pos - _position).y();
-  NumType t = 0.25 * (unit_y + 2.0);
-  if (t > 1) {
-    return ColorC();
-  }
-  return gradient_start * (1.0 - t) + _color * t;
 }

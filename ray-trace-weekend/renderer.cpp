@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "frame.h"
 #include "scene.h"
+#include "random_helper.h"
 
 #include <algorithm>
 #include <cassert>
@@ -11,7 +12,6 @@
 #include <iostream>
 #include <numeric>
 
-#include <random>
 
 // Anon namespace
 
@@ -23,20 +23,19 @@ Renderer::Renderer(Box size, std::string filename, size_t samples)
     : _box(size), _filename(filename), _samples(samples) {}
 
 ColorC Renderer::average_pixel(const Scene& s, const Camera& c, Loc pixel) {
-  std::random_device random_device;
-  std::mt19937 random_engine(random_device());
-  std::uniform_real_distribution<NumType> rand_dist(-0.5, 0.5);
   ColorC total_color;
   for (size_t i = 0; i < _samples; ++i) {
-    NumType x_factor = (NumType(pixel.col) + rand_dist(random_engine))/ _box.width;
-    NumType y_factor = (NumType(pixel.row) + rand_dist(random_engine))/ _box.height;
+    NumType x_factor = (NumType(pixel.col) + get_uniform_random(-0.5, 0.5))/ _box.width;
+    NumType y_factor = (NumType(pixel.row) + get_uniform_random(-0.5, 0.5))/ _box.height;
     auto r = c.get_pixel_ray(x_factor, y_factor);
     total_color = total_color + s.fire_ray(r);
   }
-  return total_color / _samples;
+  total_color = total_color / _samples;
+  total_color.gamma_correct(2);
+  return total_color;
 }
 
-void Renderer::render(const Scene& s, const Camera& c) {
+void Renderer::render(const Scene& s, const Camera& c, bool save) {
   auto frame = initialize_frame(_box);
 
   std::vector<size_t> indices(_box.height * _box.width);
@@ -49,7 +48,7 @@ void Renderer::render(const Scene& s, const Camera& c) {
               return average_pixel(s, c, l);
             });
 
-  write_ppm(frame);
+  if (save) write_ppm(frame);
 }
 
 void Renderer::write_ppm(const std::vector<ColorC>& pixels) {
@@ -58,7 +57,6 @@ void Renderer::write_ppm(const std::vector<ColorC>& pixels) {
 
   file << "P3\n" << _box.width << " " << _box.height << "\n255\n";
   for (size_t row = 0; row < _box.height; ++row) {
-    std::cerr << "\rScanlines remaining: " << row << ' ' << std::flush;
     for (size_t col = 0; col < _box.width; ++col) {
       size_t index = to_index(row, col, _box);
       const auto& p = pixels[index];
@@ -66,5 +64,4 @@ void Renderer::write_ppm(const std::vector<ColorC>& pixels) {
     }
   }
   file.close();
-  std::cerr << "Donezo\n";
 }
