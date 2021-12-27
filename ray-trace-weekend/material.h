@@ -32,6 +32,17 @@ class DiffuseMaterial : public Material {
   ColorC _color;
 
  public:
+  DiffuseMaterial(const ColorC& c) : _color(c) {}
+  virtual ColorC get_color(const RayCollision& collision,
+                           const Primitive& primitive,
+                           const Scene& scene) const;
+};
+
+class MetalMaterial : public Material {
+  ColorC _color;
+
+ public:
+  MetalMaterial(const ColorC& c) : _color(c) {}
   virtual ColorC get_color(const RayCollision& collision,
                            const Primitive& primitive,
                            const Scene& scene) const;

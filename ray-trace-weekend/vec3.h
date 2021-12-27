@@ -12,12 +12,12 @@ class Vec3 : public ElementWise<T, Vec3<T>, 3> {
   // T d[3];
 
  public:
-  Vec3() : ElementWise{0, 0, 0} {}
-  Vec3(T x, T y, T z) : ElementWise{x, y, z} {}
+  Vec3() : ElementWise<T, Vec3<T>, 3>(0, 0, 0) {}
+  Vec3(T x, T y, T z) : ElementWise<T, Vec3<T>, 3>(x, y, z) {}
 
-  T x() const { return d[0]; }
-  T y() const { return d[1]; }
-  T z() const { return d[2]; }
+  T x() const { return this->d[0]; }
+  T y() const { return this->d[1]; }
+  T z() const { return this->d[2]; }
 
   T dot(const Vec3<T>& b) const {
     return (x() * b.x()) + (y() * b.y()) + (z() * b.z());

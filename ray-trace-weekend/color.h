@@ -1,27 +1,27 @@
 #pragma once
 
-#include "vec3.h"
 #include <algorithm>
+#include "vec3.h"
 
 template <typename T>
-class Color: public ElementWise<T, Color<T>, 3> {
+class Color : public ElementWise<T, Color<T>, 3> {
  public:
-  Color() : ElementWise{0, 0, 0} {}
-  Color(T r, T g, T b) : ElementWise{r, g, b} {}
+  Color() : ElementWise<T, Color<T>, 3>(0, 0, 0) {}
+  Color(T r, T g, T b) : ElementWise<T, Color<T>, 3>(r, g, b) {}
 
-  T r() const { return d[0]; }
-  T g() const { return d[1]; }
-  T b() const { return d[2]; }
+  T r() const { return this->d[0]; }
+  T g() const { return this->d[1]; }
+  T b() const { return this->d[2]; }
 
-  void gamma_correct(int val=2) {
+ void gamma_correct(int val = 2) {
     if (val == 2) {
-      d[0] = std::sqrt(d[0]);
-      d[1] = std::sqrt(d[1]);
-      d[2] = std::sqrt(d[2]);
+      this->d[0] = std::sqrt(this->d[0]);
+      this->d[1] = std::sqrt(this->d[1]);
+      this->d[2] = std::sqrt(this->d[2]);
     } else {
-      d[0] = std::pow(d[0], 1.0 / val);
-      d[1] = std::pow(d[1], 1.0 / val);
-      d[2] = std::pow(d[2], 1.0 / val);
+      this->d[0] = std::pow(this->d[0], 1.0 / val);
+      this->d[1] = std::pow(this->d[1], 1.0 / val);
+      this->d[2] = std::pow(this->d[2], 1.0 / val);
     }
   }
 
@@ -34,4 +34,3 @@ class Color: public ElementWise<T, Color<T>, 3> {
   }
 };
 using ColorC = Color<NumType>;
-

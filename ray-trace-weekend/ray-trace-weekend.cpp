@@ -23,17 +23,20 @@ int main() {
   auto scene = Scene();
   shared_ptr<Material> normal_material = std::make_shared<NormalMaterial>();
   shared_ptr<Material> gradient_material = std::make_shared<GradientMaterial>(ColorC(0.5, 0.7, 1), ColorC(1, 1, 1));
-  shared_ptr<Material> diffuse_material = std::make_shared<DiffuseMaterial>();
+  shared_ptr<Material> diffuse_material =
+      std::make_shared<DiffuseMaterial>(ColorC(0.7, 0.3, 0.3));
+  shared_ptr<Material> gray_diffuse =
+      std::make_shared<DiffuseMaterial>(ColorC(0.2, 0.2, 0.2));
   scene.take_object(
       make_unique<BackgroundWall>(Vec3C(0, 0, -2), gradient_material));
   scene.take_object(
       make_unique<Sphere>(Vec3C(0, 0, -1), 0.5, diffuse_material));
   scene.take_object(
-      make_unique<Sphere>(Vec3C(0, -21, -1.5), 20, diffuse_material));
+      make_unique<Sphere>(Vec3C(0, -21, -1.5), 20, gray_diffuse));
   scene.take_object(
-      make_unique<Sphere>(Vec3C(1.7, -1, -1.5), 0.3, diffuse_material));
+      make_unique<Sphere>(Vec3C(1.7, -1, -1.5), 0.3, gray_diffuse));
   scene.take_object(
-      make_unique<Sphere>(Vec3C(-1, -1, -1.8), 0.2, diffuse_material));
+      make_unique<Sphere>(Vec3C(-1, -1, -1.8), 0.2, gray_diffuse));
   auto depth = 5;
   scene.set_max_depth(depth);
   std::cout << "Depth: " << depth << std::endl;

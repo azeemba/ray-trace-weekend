@@ -25,7 +25,7 @@ ColorC Scene::fire_ray(const RayC& ray, size_t depth) const {
   if (_objects.empty())
     return ColorC();
   if (depth > _max_depth) {
-    return ColorC(1,1,1);
+    return ColorC();
   }
 
   Primitive* smallest = _objects.begin()->get();

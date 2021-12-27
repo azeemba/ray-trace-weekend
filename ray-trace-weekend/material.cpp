@@ -23,9 +23,21 @@ ColorC DiffuseMaterial::get_color(const RayCollision& collision,
     random_unit = -random_unit;
   }
   return scene.fire_ray(
-             RayC(out_sphere_center, collision.normal_unit + random_unit),
+             RayC(collision.location, collision.normal_unit + random_unit),
              collision.depth) *
-         0.5;
+         _color;
+}
+
+
+ColorC MetalMaterial::get_color(const RayCollision& collision,
+  const Primitive& primitive,
+  const Scene& scene) const {
+  auto& in_ray = collision.ray.dir();
+  auto& n = collision.normal_unit;
+  auto reflected_ray = n*in_ray.dot(n)*2 - in_ray;
+
+  //return scene.fire_ray()
+  return ColorC();
 }
 
 GradientMaterial::GradientMaterial(const ColorC& start, const ColorC& end)

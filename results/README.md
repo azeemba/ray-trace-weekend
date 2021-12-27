@@ -18,3 +18,5 @@ Previews
 
 ![08-diffuse-brighten.ppm.jpg](08-diffuse-brighten.ppm.jpg)
 
+![09-diffuse-fix.ppm.jpg](09-diffuse-fix.ppm.jpg)
+
