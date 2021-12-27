@@ -26,3 +26,5 @@ to build a ray tracer. Most of the code is very differently structured.
 
 ![10-metal-material.ppm.jpg](results/10-metal-material.ppm.jpg)
 
+![11-metal-fuzzy.ppm.jpg](results/11-metal-fuzzy.ppm.jpg)
+

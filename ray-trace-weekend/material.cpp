@@ -5,6 +5,14 @@
 #include "ray.h"
 #include "scene.h"
 
+namespace {
+Vec3C get_random_vec() {
+  return Vec3C(get_uniform_random(-1, 1), get_uniform_random(-1, 1),
+               get_uniform_random(-1, 1))
+      .unit();
+}
+}  // namespace
+
 ColorC NormalMaterial::get_color(const RayCollision& collision,
                                  const Primitive& primitive,
                                  const Scene& scene) const {
@@ -16,9 +24,7 @@ ColorC DiffuseMaterial::get_color(const RayCollision& collision,
                                   const Primitive& primitive,
                                   const Scene& scene) const {
   auto out_sphere_center = collision.location + collision.normal_unit;
-  auto random_unit = Vec3C(get_uniform_random(-1, 1), get_uniform_random(-1, 1),
-                           get_uniform_random(-1, 1))
-                         .unit();
+  auto random_unit = get_random_vec();
   if (random_unit.dot(collision.normal_unit) < 0) {
     random_unit = -random_unit;
   }
@@ -28,13 +34,13 @@ ColorC DiffuseMaterial::get_color(const RayCollision& collision,
          _color;
 }
 
-
 ColorC MetalMaterial::get_color(const RayCollision& collision,
-  const Primitive& primitive,
-  const Scene& scene) const {
+                                const Primitive& primitive,
+                                const Scene& scene) const {
   auto& in_ray = collision.ray.dir();
   auto& n = collision.normal_unit;
-  auto reflected_ray = n*in_ray.dot(n)*2 - in_ray;
+  auto reflected_ray =
+      n * in_ray.dot(n) * 2 - in_ray + get_random_vec() * _fuzz_factor;
 
   return scene.fire_ray(RayC(collision.location, -reflected_ray),
                         collision.depth) *

@@ -28,9 +28,11 @@ int main() {
   shared_ptr<Material> gray_diffuse =
       std::make_shared<DiffuseMaterial>(ColorC(0.2, 0.2, 0.2));
   shared_ptr<Material> metal_material =
-      std::make_shared<MetalMaterial>(ColorC(0.7, 0.7, 0.2));
+      std::make_shared<MetalMaterial>(ColorC(0.7, 0.7, 0.2), 0.05);
   shared_ptr<Material> gray_metal_material =
-      std::make_shared<MetalMaterial>(ColorC(0.3, 0.3, 0.3));
+      std::make_shared<MetalMaterial>(ColorC(0.8, 0.8, 0.8));
+  shared_ptr<Material> gray_fuzz_metal =
+      std::make_shared<MetalMaterial>(ColorC(0.8, 0.8, 0.8), 0.2);
   scene.take_object(
       make_unique<BackgroundWall>(Vec3C(0, 0, -2), gradient_material));
   scene.take_object(
@@ -43,6 +45,8 @@ int main() {
       make_unique<Sphere>(Vec3C(1.7, -0.3, -1), 0.3, gray_diffuse));
   scene.take_object(
       make_unique<Sphere>(Vec3C(-0.8, -0.3, -1), 0.2, gray_metal_material));
+  scene.take_object(
+      make_unique<Sphere>(Vec3C(-0.8, 0.1, -1), 0.2, gray_fuzz_metal));
   auto depth = 10;
   scene.set_max_depth(depth);
   std::cout << "Depth: " << depth << std::endl;

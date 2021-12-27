@@ -22,3 +22,5 @@ Previews
 
 ![10-metal-material.ppm.jpg](10-metal-material.ppm.jpg)
 
+![11-metal-fuzzy.ppm.jpg](11-metal-fuzzy.ppm.jpg)
+

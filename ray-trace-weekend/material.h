@@ -40,9 +40,11 @@ class DiffuseMaterial : public Material {
 
 class MetalMaterial : public Material {
   ColorC _color;
+  NumType _fuzz_factor;
 
  public:
-  MetalMaterial(const ColorC& c) : _color(c) {}
+  MetalMaterial(const ColorC& c, NumType fuzz = 0)
+      : _color(c), _fuzz_factor(fuzz) {}
   virtual ColorC get_color(const RayCollision& collision,
                            const Primitive& primitive,
                            const Scene& scene) const;
