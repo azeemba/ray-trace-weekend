@@ -24,3 +24,5 @@ Previews
 
 ![11-metal-fuzzy.ppm.jpg](11-metal-fuzzy.ppm.jpg)
 
+![12-high-res.ppm.jpg](12-high-res.ppm.jpg)
+
