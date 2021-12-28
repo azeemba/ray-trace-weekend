@@ -12,6 +12,9 @@
 #include <iostream>
 #include <numeric>
 
+#ifdef OPENCV_LOADED
+#include <opencv2/opencv.hpp>
+#endif
 
 // Anon namespace
 
@@ -48,7 +51,29 @@ void Renderer::render(const Scene& s, const Camera& c, bool save) {
               return average_pixel(s, c, l);
             });
 
-  if (save) write_ppm(frame);
+  if (save) {
+    write_ppm(frame);
+  }
+  else {
+    display_frame(frame);
+  }
+}
+
+void Renderer::display_frame(const std::vector<ColorC>& pixels) {
+#ifdef OPENCV_LOADED
+  cv::Mat image = cv::Mat::zeros(_box.height, _box.width, CV_8UC3);
+  for (size_t i = 0; i < _box.height; ++i) {
+    for (size_t j = 0; j < _box.width; ++j) {
+      auto& pixel = pixels[to_index(i, j, _box)];
+      auto& x = image.at<cv::Vec3b>(i, j);
+      x[0] = pixel.ib();
+      x[1] = pixel.ig();
+      x[2] = pixel.ir();
+    }
+  }
+  cv::imshow("RayTracerWeekend", image);
+  cv::waitKey(0);
+#endif
 }
 
 void Renderer::write_ppm(const std::vector<ColorC>& pixels) {

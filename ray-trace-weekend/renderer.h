@@ -19,5 +19,6 @@ class Renderer {
 
  private:
   void write_ppm(const std::vector<ColorC>& pixels);
+  void display_frame(const std::vector<ColorC>& pixels);
   ColorC average_pixel(const Scene&s, const Camera& c, Loc pixel);
 };
