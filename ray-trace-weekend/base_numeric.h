@@ -3,6 +3,8 @@
 #include <stddef.h>
 using NumType = float;
 
+inline constexpr NumType PI = 3.14159265358979323846;
+
 template <typename T, typename Self, int N>
 class ElementWise {
  protected:

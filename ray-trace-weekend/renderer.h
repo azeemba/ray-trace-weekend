@@ -11,14 +11,16 @@ class Camera;
 class Renderer {
   Box _box;
   std::string _filename;
-  size_t _samples;
 
  public:
-  Renderer(Box size, std::string filename, size_t samples=1);
-  void render(const Scene& s, const Camera& c, bool save=true);
+  Renderer(Box size, std::string filename);
+  void render(const Scene& s, const Camera& c, bool save=true, size_t samples=1);
+
+  void play_animation(Scene& s, Camera& c);
 
  private:
+  std::vector<ColorC> render_frame(const Scene& s, const Camera& c, size_t samples);
   void write_ppm(const std::vector<ColorC>& pixels);
   void display_frame(const std::vector<ColorC>& pixels);
-  ColorC average_pixel(const Scene&s, const Camera& c, Loc pixel);
+  ColorC average_pixel(const Scene&s, const Camera& c, Loc pixel, size_t samples);
 };

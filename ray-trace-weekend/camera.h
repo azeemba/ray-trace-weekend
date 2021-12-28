@@ -16,4 +16,5 @@ class Camera {
          NumType focal_length);
 
   RayC get_pixel_ray(NumType x_percent, NumType y_percent) const;
+  void recompute_orientation(const Vec3C& position, const Vec3C& lookat, NumType focal_length);
 };

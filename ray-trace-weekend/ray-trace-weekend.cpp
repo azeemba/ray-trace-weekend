@@ -21,6 +21,7 @@ int main() {
   NumType focal_length = 1;
   auto camera = Camera(camera_loc, view_width, view_height, focal_length);
   auto scene = Scene();
+
   shared_ptr<Material> normal_material = std::make_shared<NormalMaterial>();
   shared_ptr<Material> gradient_material = std::make_shared<GradientMaterial>(ColorC(0.5, 0.7, 1), ColorC(1, 1, 1));
   shared_ptr<Material> diffuse_material =
@@ -33,8 +34,9 @@ int main() {
       std::make_shared<MetalMaterial>(ColorC(0.8, 0.8, 0.8));
   shared_ptr<Material> gray_fuzz_metal =
       std::make_shared<MetalMaterial>(ColorC(0.8, 0.8, 0.8), 0.2);
+
   scene.take_object(
-      make_unique<BackgroundWall>(Vec3C(0, 0, -2), gradient_material));
+      make_unique<BackgroundWall>(Vec3C(0, 0, -5), gradient_material));
   scene.take_object(
       make_unique<Sphere>(Vec3C(0, 0, -1), 0.5, diffuse_material));
   scene.take_object(
@@ -47,19 +49,22 @@ int main() {
       make_unique<Sphere>(Vec3C(-0.8, -0.3, -1), 0.2, gray_metal_material));
   scene.take_object(
       make_unique<Sphere>(Vec3C(-0.8, 0.1, -1), 0.2, gray_fuzz_metal));
-  auto depth = 10;
-  scene.set_max_depth(depth);
-  std::cout << "Depth: " << depth << std::endl;
-
-
   size_t image_width = 400;
   size_t image_height = static_cast<size_t>(image_width / aspect_ratio);
   string filename = "test.ppm";
-  auto r = Renderer({image_height, image_width}, filename, 30);
+  auto r = Renderer({image_height, image_width}, filename);
 
-  r.render(scene, camera, true);
+#ifdef OPENCV_LOADED
+  r.play_animation(scene, camera);
+#endif  // OPENCV_LOADED
+
+  auto depth = 10;
+  std::cout << "Depth: " << depth << std::endl;
+  scene.set_max_depth(depth);
+  camera.recompute_orientation(camera_loc, Vec3C(0, 0, -1), focal_length);
+
   const auto startTime = std::chrono::high_resolution_clock::now();
-  r.render(scene, camera, false);
+  r.render(scene, camera, true, 100);
   const auto endTime = std::chrono::high_resolution_clock::now();
   std::cout << "Time: "
             << std::chrono::duration_cast<std::chrono::milliseconds>(endTime -
