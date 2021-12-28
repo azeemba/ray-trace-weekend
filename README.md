@@ -9,10 +9,6 @@ Some additional features here:
 - Parallelize ray tracing using C++17's `par_unseq` support
 - Add optional live preview support using OpenCV.
 
-Live preview demo:
-
-![13-live-preview.gif](results/13-live-preview.gif)
-
 ## Incremental Results
 
 ![01-gradient-test.ppm.jpg](results/01-gradient-test.ppm.jpg)
@@ -39,3 +35,4 @@ Live preview demo:
 
 ![12-high-res.ppm.jpg](results/12-high-res.ppm.jpg)
 
+![13-live-preview.gif](results/13-live-preview.gif)
