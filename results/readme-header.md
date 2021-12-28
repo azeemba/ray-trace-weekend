@@ -11,7 +11,7 @@ Some additional features here:
 
 Live preview demo:
 
-<video src='results/13-live-preview.mp4'/>
+![13-live-preview.gif](result/13-live-preview.gif)
 
 ## Incremental Results
 
